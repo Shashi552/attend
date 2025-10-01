@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic QR Attendance Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="top-right-controls">
+            <button id="decode-btn" class="icon-btn" title="Decode Base64">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm3.707 10.707a1 1 0 0 0-1.414 1.414l4 4a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L13 14.586V7a1 1 0 1 0-2 0v7.586l-3.293-3.293z"></path></svg>
+            </button>
+            <button id="scan-btn" class="icon-btn" title="Scan QR Code">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M15 3h6v6h-2V5h-4V3zM9 3v2H5v4H3V3h6zm6 18v-2h4v-4h2v6h-6zm-6 18H3v-6h2v4h4v2zM3 11h18v2H3v-2z"></path></svg>
+            </button>
+        </div>
+
+        <h1>Dynamic QR Attendance Generator</h1>
+        <div class="clock" id="real-time-clock"></div>
+
+        <fieldset id="form-fieldset">
+            <div id="manual-entry-fields" class="form-grid hidden">
+                 <div class="input-group">
+                    <label for="manualCourseName">Custom Subject Name</label>
+                    <input type="text" id="manualCourseName" placeholder="e.g., Intro to AI">
+                </div>
+                 <div class="input-group">
+                    <label for="manualCourseCode">Custom Subject Code</label>
+                    <input type="text" id="manualCourseCode" placeholder="e.g., AI101">
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="courseCode">Subject Name</label>
+                    <select id="courseCode">
+                        <option value="" disabled selected>-- Select a Subject --</option>
+                        <option value="24CSEN2371">Advanced Coding</option>
+                        <option value="CSEN2091">OOSE Based Application Development</option>
+                        <option value="CSEN2091P">OOSE Based App Dev Lab</option>
+                        <option value="CSEN3321">Threat Intelligence</option>
+                        <option value="EECE1071">Battery Technologies</option>
+                        <option value="EECE3121">Info Theory & Error Control</option>
+                        <option value="FINA3001">Personal Financial Planning</option>
+                        <option value="MECH3121">IoT in Manufacturing</option>
+                        <option value="MES11001">Health and Wellbeing</option>
+                        <option value="INTN3444">Internship/Reviewer</option>
+                        <option value="manual">Not in the list...</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="sessionID">Session ID</label>
+                    <input type="text" id="sessionID" placeholder="Select a subject or enter manually">
+                </div>
+                <div class="input-group">
+                    <label for="recordDate">Record Date</label>
+                    <input type="date" id="recordDate">
+                </div>
+                <div class="input-group">
+                    <label for="startTime">Class Start Time</label>
+                    <input type="time" id="startTime">
+                </div>
+                 <div class="input-group">
+                    <label for="logDuration">Log Duration (seconds)</label>
+                    <input type="number" id="logDuration" value="15" placeholder="e.g., 15">
+                </div>
+            </div>
+        </fieldset>
+        
+        <button id="toggleBtn">Start Auto-Update</button>
+
+        <div id="results" class="hidden">
+            <h2 id="results-header"></h2>
+            <div class="progress-bar-container"><div id="progress-bar"></div></div>
+            <div class="output-grid">
+                <div id="qrcode-container"></div>
+                <div class="output-box">
+                    <h3>Base64 Encoded</h3>
+                    <code id="base64Result"></code>
+                    <button id="copyBtn">Copy</button>
+                    <hr>
+                    <h3>Plain Text Record</h3>
+                    <code id="plainResult"></code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="scanner-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-scanner-modal-btn" class="close-btn">&times;</button>
+            <h2>Scan QR Code</h2>
+            <div id="scanner-options">
+                <button id="start-camera-btn">Scan with Camera</button>
+                <button id="upload-file-btn">Upload QR Image</button>
+                <input type="file" id="qr-file-input" accept="image/*" class="hidden">
+            </div>
+            <div id="qr-reader"></div>
+            <div id="scan-result-container" class="details-display-container hidden">
+                <h3>Decoded Details:</h3>
+                <div id="scan-result-display" class="details-display"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="decoder-modal" class="modal-overlay hidden">
+         <div class="modal-content">
+            <button id="close-decoder-modal-btn" class="close-btn">&times;</button>
+            <h2>Decode Base64 String</h2>
+            <textarea id="base64-input" placeholder="Paste Base64 string here..."></textarea>
+            <button id="decode-string-btn">Decode</button>
+            <div id="decode-result-container" class="details-display-container hidden">
+                <h3>Decoded Details:</h3>
+                <div id="decode-result-display" class="details-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
