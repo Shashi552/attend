@@ -24,14 +24,8 @@
 
         <fieldset id="form-fieldset">
             <div id="manual-entry-fields" class="form-grid hidden">
-                 <div class="input-group">
-                    <label for="manualCourseName">Custom Subject Name</label>
-                    <input type="text" id="manualCourseName" placeholder="e.g., Intro to AI">
-                </div>
-                 <div class="input-group">
-                    <label for="manualCourseCode">Custom Subject Code</label>
-                    <input type="text" id="manualCourseCode" placeholder="e.g., AI101">
-                </div>
+                 <div class="input-group"><label for="manualCourseName">Custom Subject Name</label><input type="text" id="manualCourseName" placeholder="e.g., Intro to AI"></div>
+                 <div class="input-group"><label for="manualCourseCode">Custom Subject Code</label><input type="text" id="manualCourseCode" placeholder="e.g., AI101"></div>
             </div>
             <div class="form-grid">
                 <div class="input-group">
@@ -51,22 +45,10 @@
                         <option value="manual">Not in the list...</option>
                     </select>
                 </div>
-                <div class="input-group">
-                    <label for="sessionID">Session ID</label>
-                    <input type="text" id="sessionID" placeholder="Select a subject or enter manually">
-                </div>
-                <div class="input-group">
-                    <label for="recordDate">Record Date</label>
-                    <input type="date" id="recordDate">
-                </div>
-                <div class="input-group">
-                    <label for="startTime">Class Start Time</label>
-                    <input type="time" id="startTime">
-                </div>
-                 <div class="input-group">
-                    <label for="logDuration">Log Duration (seconds)</label>
-                    <input type="number" id="logDuration" value="15" placeholder="e.g., 15">
-                </div>
+                <div class="input-group"><label for="sessionID">Session ID</label><input type="text" id="sessionID" placeholder="Enter session ID manually"></div>
+                <div class="input-group"><label for="recordDate">Record Date</label><input type="date" id="recordDate"></div>
+                <div class="input-group"><label for="startTime">Class Start Time</label><input type="time" id="startTime"></div>
+                <div class="input-group"><label for="logDuration">Log Duration (seconds)</label><input type="number" id="logDuration" value="15" placeholder="e.g., 15"></div>
             </div>
         </fieldset>
         
@@ -78,12 +60,8 @@
             <div class="output-grid">
                 <div id="qrcode-container"></div>
                 <div class="output-box">
-                    <h3>Base64 Encoded</h3>
-                    <code id="base64Result"></code>
-                    <button id="copyBtn">Copy</button>
-                    <hr>
-                    <h3>Plain Text Record</h3>
-                    <code id="plainResult"></code>
+                    <h3>Base64 Encoded</h3><code id="base64Result"></code><button id="copyBtn">Copy</button><hr>
+                    <h3>Plain Text Record</h3><code id="plainResult"></code>
                 </div>
             </div>
         </div>
@@ -98,10 +76,15 @@
                 <button id="upload-file-btn">Upload QR Image</button>
                 <input type="file" id="qr-file-input" accept="image/*" class="hidden">
             </div>
-            <div id="qr-reader"></div>
+            <div id="qr-reader-container" class="hidden">
+                <div id="qr-reader"></div>
+                <div id="camera-controls" class="hidden">
+                    <button id="torch-btn">🔦 Torch</button>
+                    <input type="range" id="zoom-slider" title="Zoom">
+                </div>
+            </div>
             <div id="scan-result-container" class="details-display-container hidden">
-                <h3>Decoded Details:</h3>
-                <div id="scan-result-display" class="details-display"></div>
+                <h3>Decoded Details:</h3><div id="scan-result-display" class="details-display"></div>
             </div>
         </div>
     </div>
@@ -113,8 +96,7 @@
             <textarea id="base64-input" placeholder="Paste Base64 string here..."></textarea>
             <button id="decode-string-btn">Decode</button>
             <div id="decode-result-container" class="details-display-container hidden">
-                <h3>Decoded Details:</h3>
-                <div id="decode-result-display" class="details-display"></div>
+                <h3>Decoded Details:</h3><div id="decode-result-display" class="details-display"></div>
             </div>
         </div>
     </div>
