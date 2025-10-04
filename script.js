@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateClock() { el.clock.textContent = new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }); }
 
     async function postAttendance(base64data) {
-        const url = 'http://shashank.local:3001/PostAttendance'; // Points to your local proxy
+        const url = 'http://shashank:3001/PostAttendance'; // Points to your local proxy
         el.apiResponseContainer.classList.remove('hidden');
         try {
             const response = await fetch(url, {
@@ -307,4 +307,5 @@ document.addEventListener('DOMContentLoaded', () => {
     updateClock(); setInterval(updateClock, 1000);
     el.dateInput.value = new Date().toISOString().split('T')[0];
     autoSelectUpcomingClass();
+
 });
