@@ -17,6 +17,9 @@
             <button id="scan-btn" class="icon-btn" title="Scan QR Code">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M15 3h6v6h-2V5h-4V3zM9 3v2H5v4H3V3h6zm6 18v-2h4v-4h2v6h-6zm-6 18H3v-6h2v4h4v2zM3 11h18v2H3v-2z"></path></svg>
             </button>
+            <button id="clone-scan-btn" class="icon-btn" title="Clone Session from QR">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 17.914V3a1 1 0 0 1 2 0v12h5v-3.086l-6.5-6.5-1.414 1.414 4.5 4.5V17.914a1 1 0 0 1-1.555.832L3 14.5v-1l8.445-4.223a1 1 0 0 1 1.11 0L21 13.5v1l-6.055 4.238A1 1 0 0 1 14 17.914H7z"></path></svg>
+            </button>
         </div>
 
         <h1>Dynamic QR Attendance Generator</h1>
@@ -55,7 +58,10 @@
         <button id="toggleBtn">Start Auto-Update</button>
 
         <div id="results" class="hidden">
-            <h2 id="results-header"></h2>
+            <div class="header-with-status">
+                <h2 id="results-header"></h2>
+                <div id="api-status"></div>
+            </div>
             <div class="progress-bar-container"><div id="progress-bar"></div></div>
             <div class="output-grid">
                 <div id="qrcode-container"></div>
@@ -64,13 +70,17 @@
                     <h3>Plain Text Record</h3><code id="plainResult"></code>
                 </div>
             </div>
+            <div id="api-response-container" class="output-box hidden">
+                <h3>Server Response</h3>
+                <pre id="api-response-display"></pre>
+            </div>
         </div>
     </div>
 
     <div id="scanner-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <button id="close-scanner-modal-btn" class="close-btn">&times;</button>
-            <h2>Scan QR Code</h2>
+            <h2 id="scanner-title">Scan QR Code</h2>
             <div id="scanner-options">
                 <button id="start-camera-btn">Scan with Camera</button>
                 <button id="upload-file-btn">Upload QR Image</button>

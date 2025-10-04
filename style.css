@@ -20,7 +20,7 @@ body {
 .icon-btn:hover { background-color: #e4e6eb; }
 .icon-btn svg { width: 100%; height: 100%; color: #606770; }
 
-h1 { text-align: center; color: #1c1e21; margin-bottom: 10px; }
+h1 { text-align: center; color: #1c1e21; margin-bottom: 10px; padding-right: 150px; } /* Add padding to avoid overlap */
 .clock {
     text-align: center; font-size: 1.5rem; font-weight: 500; color: #606770; margin-bottom: 25px;
     background-color: #f0f2f5; padding: 10px; border-radius: 8px;
@@ -49,6 +49,13 @@ input:focus, select:focus, textarea:focus { border-color: #1877f2; outline: none
 
 /* Results Section */
 #results { margin-top: 30px; }
+.header-with-status { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
+#results-header { margin: 0; }
+#api-status { font-size: 0.9rem; font-weight: 600; padding: 4px 8px; border-radius: 5px; }
+#api-status.success { background-color: #d4edda; color: #155724; }
+#api-status.error { background-color: #f8d7da; color: #721c24; }
+#api-status.submitting { background-color: #fff3cd; color: #856404; }
+
 .progress-bar-container { height: 8px; width: 100%; background-color: #e9ecef; border-radius: 4px; margin: 20px 0; overflow: hidden; }
 #progress-bar { height: 100%; width: 0%; background-color: #1877f2; border-radius: 4px; transition: width 0.1s linear; }
 .output-grid { display: grid; grid-template-columns: 200px 1fr; gap: 25px; align-items: center; }
@@ -56,6 +63,8 @@ input:focus, select:focus, textarea:focus { border-color: #1877f2; outline: none
 .output-box { background-color: #f7f7f7; padding: 15px; border-radius: 8px; word-wrap: break-word; position: relative; height: 100%; }
 code { font-family: "SF Mono", "Menlo", "Courier New", monospace; font-size: 0.9rem; }
 #copyBtn { position: absolute; top: 10px; right: 10px; background-color: #e4e6eb; padding: 6px 12px; }
+#api-response-container { margin-top: 20px; }
+#api-response-display { white-space: pre-wrap; max-height: 200px; overflow-y: auto; font-size: 0.85rem; }
 
 /* Modal Styles */
 .modal-overlay {
@@ -72,16 +81,14 @@ code { font-family: "SF Mono", "Menlo", "Courier New", monospace; font-size: 0.9
 textarea { height: 120px; resize: vertical; margin-top: 15px; flex-shrink: 0; }
 
 /* Scanner & Camera Controls */
-#qr-reader-container { position: relative; margin-top: 20px; }
+#qr-reader-container { position: relative; margin-top: 20px; flex-shrink: 0; }
 #qr-reader { width: 100%; border-radius: 8px; overflow: hidden; }
 #camera-controls {
-    position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 15px; align-items: center; background: rgba(0,0,0,0.5);
-    padding: 8px 15px; border-radius: 10px;
+    position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; align-items: center;
+    background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 10px;
 }
 #torch-btn { margin: 0; padding: 8px 12px; width: auto; font-size: 1rem; }
 #zoom-slider { margin: 0; accent-color: #1877f2; }
-
 
 /* Details Display Style */
 .details-display-container { margin-top: 20px; flex-grow: 1; overflow-y: auto; min-height: 0; }
